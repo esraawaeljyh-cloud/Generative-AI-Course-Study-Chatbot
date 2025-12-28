@@ -1,64 +1,51 @@
 # Generative-AI-Course-Study-Chatbot
 
-This project implements a **study chatbot** for the *Generative AI* course.  
-The chatbot answers questions **strictly based on the provided course slides** using **Retrieval-Augmented Generation (RAG)** to ensure accuracy and prevent hallucinations.
+This project implements a **study chatbot** for the Generative AI course using **Retrieval-Augmented Generation (RAG)**.  
+The chatbot answers questions **only based on the course slides** and avoids using any external knowledge.
 
 ---
 
-## Project Overview
+## Overview
 
-The chatbot is designed to help students review and study Generative AI concepts by:
-- Retrieving relevant content from course slides (PDFs)
-- Generating concise, grounded answers
-- Refusing to answer questions that are not covered in the course material
+The chatbot loads the course PDFs, splits them into text chunks, stores them in a vector database, and retrieves the most relevant content to answer user questions accurately.
 
-The system combines **LangChain**, **FAISS**, **Hugging Face embeddings**, and an **LLM via OpenRouter**, with a **Gradio-based user interface**.
-
----
-
-## Key Features
-
-- 📚 **Course-grounded answers only** (no outside knowledge)
-- 🧠 **Retrieval-Augmented Generation (RAG)** using FAISS
-- ❌ Explicit response when information is not found:
-  > *"I don't know based on the course material."*
-- 📄 **Source citation** (file name & page number) for each valid answer
-- 🛡️ Reduced hallucinations via strict prompt design
-- 💬 Simple and user-friendly **Gradio GUI**
+If the answer is not found in the course material, the chatbot responds with:  
+**"I don't know based on the course material."**
 
 ---
 
 ## Technologies Used
 
-- **Python**
-- **LangChain (LCEL)**
-- **FAISS** (Vector Store)
-- **Hugging Face Embeddings**
-  - `sentence-transformers/all-MiniLM-L6-v2`
-- **OpenRouter API**
-  - Model: `mistralai/mistral-7b-instruct`
-- **Gradio** (Web Interface)
-- **PyPDF** (PDF loading)
+- Python  
+- LangChain (LCEL)  
+- FAISS (Vector Store)  
+- Hugging Face Embeddings  
+- Mistral 7B via OpenRouter  
+- Gradio (Web Interface)
 
 ---
 
-## System Architecture
+## How It Works
 
-1. **Course Slides (PDFs)** are loaded as documents  
-2. Text is split into chunks using `RecursiveCharacterTextSplitter`  
-3. Chunks are embedded and stored in **FAISS**  
-4. Relevant chunks are retrieved for each question  
-5. The LLM generates answers **only from retrieved context**  
-6. Answers include **source and page number** when applicable  
+1. Load course slides (PDFs)
+2. Split text into chunks
+3. Create embeddings and store them in FAISS
+4. Retrieve relevant chunks for each question
+5. Generate answers strictly from retrieved content
+6. Display answers using a Gradio interface
 
 ---
 
-## Installation & Setup
+## How to Run
 
-### 1. Install Dependencies
+1. Install the required libraries
+2. Add course PDF files to the `data/` folder
+3. Set your OpenRouter API key
+4. Run the notebook and use the Gradio interface to ask questions
 
-```bash
-pip install -U langchain langchain-community langchain-text-splitters
-pip install -U faiss-cpu sentence-transformers
-pip install -U transformers gradio
-pip install -U langchain-openai pypdf
+---
+
+## Purpose
+
+This project demonstrates how **RAG improves answer accuracy and reduces hallucinations** compared to a plain LLM when working with educational content.
+
